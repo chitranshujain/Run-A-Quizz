@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Run-A-Quizz</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+    header {
+      background-color: #0056b3;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    h2 {
+      text-align: center;
+      color: #0056b3;
+      margin-top: 25px;
+      font-size: 24px;
+    }
+    .container {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fafafa;
+      border: 2px solid #cce0ff;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      background-color: #e6f0ff;
+    }
+    .card img.category-icon {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #e6f0ff;
+      margin-bottom: 15px;
+      margin-top: 5px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.09);
+      padding: 10px;
+    }
+    .card h3 {
+      color: #0056b3;
+      margin: 10px 0 5px;
+      font-size: 21px;
+      font-weight: bold;
+    }
+    /* Quiz section with blue theme */
+    .quiz-section {
+      background-color: #e6f0ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+    }
+    iframe {
+      width: 80%;
+      max-width: 850px;
+      height: 65vh;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      background: #fff;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 6px 14px;
+      background-color: #0056b3;
+      color: white;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .back-btn:hover {
+      background-color: #003d80;
+    }
+    .hidden {
+      display: none;
+    }
+    footer {
+      background-color: #06509f;
+      text-align: center;
+      padding: 15px;
+      margin-top: 0;
+      font-size: 14px;
+      color: white;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>Run-A-Quizz !!</header>
+    <h3># Your Own Quizz ChatBot ;)
+# Find & Play Fun Quizzes # Conversational format.
+        </h3>
+  <!-- Categories Section -->
+  <h2 id="category-heading">Choose a Category</h2>
+  <section id="categories" class="container">
+    <div class="card" onclick="openQuiz('https://www.freeonlinequizzes.com/quiz/general-knowledge')">
+      <!-- <img class="category-icon" src="https://cdn-icons-png.flaticon.com/512/3313/3313990.png" alt="General Knowledge Icon" /> -->
+      <h3>General Knowledge</h3>
+      <p>Test your overall awareness</p>
+    </div>
+    <div class="card" onclick="openQuiz('https://www.freeonlinequizzes.com/quiz/science')">
+      <!-- <img class="category-icon" src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="Science Icon" /> -->
+      <h3>Science</h3>
+      <p>Challenge your science IQ</p>
+    </div>
+    <div class="card" onclick="openQuiz('https://www.freeonlinequizzes.com/quiz/history')">
+      <!-- <img class="category-icon" src="https://cdn-icons-png.flaticon.com/512/3595/3595457.png" alt="History Icon" /> -->
+      <h3>History</h3>
+      <p>Explore the past with fun quizzes</p>
+    </div>
+    <div class="card" onclick="openQuiz('https://www.freeonlinequizzes.com/quiz/geography')">
+      <!-- <img class="category-icon" src="https://cdn-icons-png.flaticon.com/512/484/484167.png" alt="Geography Icon" /> -->
+      <h3>Geography</h3>
+      <p>Discover world locations</p>
+    </div>
+    <div class="card" onclick="openQuiz('https://www.freeonlinequizzes.com/quiz/sports')">
+      <!-- <img class="category-icon" src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Sports Icon" /> -->
+      <h3>Sports</h3>
+      <p>Show your sports knowledge</p>
+    </div>
+    <div class="card" onclick="openQuiz('https://www.freeonlinequizzes.com/quiz/movies')">
+      <!-- <img class="category-icon" src="https://cdn-icons-png.flaticon.com/512/2921/2921829.png" alt="Movies Icon" /> -->
+      <h3>Movies</h3>
+      <p>Fun quizzes for movie buffs</p>
+    </div>
+  </section>
+
+  <!-- Quiz Section -->
+  <section id="quiz-section" class="quiz-section hidden">
+    <iframe id="quizFrame"></iframe>
+    <a class="back-btn" onclick="goBack()">⬅ Back to Categories</a>
+  </section>
+
+  <footer>
+    Made with ❤️ | Enjoy learning & fun quizzes daily!
+  </footer>
+
+  <script>
+    function openQuiz(url) {
+      document.getElementById('categories').classList.add('hidden');
+      document.getElementById('category-heading').classList.add('hidden');
+      document.getElementById('quiz-section').classList.remove('hidden');
+      document.getElementById('quizFrame').src = url;
+    }
+    function goBack() {
+      document.getElementById('quizFrame').src = '';
+      document.getElementById('quiz-section').classList.add('hidden');
+      document.getElementById('categories').classList.remove('hidden');
+      document.getElementById('category-heading').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
